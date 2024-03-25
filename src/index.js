@@ -16,7 +16,7 @@ const serviceAccountAuth = new JWT({
 
 /**
  * Выбираем рандомную ячейку которая содержит сообщение
- * @return {Promise<number|boolean|string|GoogleSpreadsheetCellErrorValue>}
+ * @return {Promise<number|boolean|string>}
  */
 async function getRandomRow() {
     console.log('start getRandomRow')
@@ -46,14 +46,14 @@ async function getRandomRow() {
 }
 
 
-async function postToSlack(message) {
+async function postToSlack(channel,message) {
     const slackClient = new WebClient(process.env.SLACK_API_TOKEN);
     try {
         const result = await slackClient.chat.postMessage({
-            channel: process.env.CHANNEL_NAME,
+            channel: channel,
             text: message,
         });
-        console.log('Message sent successfully:', {result: result.ts, message: message, channel: process.env.CHANNEL_NAME});
+        console.log('Message sent successfully:', {result: result.ts, message: message, channel: channel});
     } catch (error) {
         console.error('Error posting message:', error);
     }
@@ -61,10 +61,20 @@ async function postToSlack(message) {
 
 
 async function main() {
+    const channels = [
+        {
+            name: '#test'
+        },
+        {
+            name: '#general'
+        }
+    ]
     const message = await getRandomRow();
 
+    for (const item of channels) {
+       await postToSlack(item.name,message);
+    }
 
-    await postToSlack(message);
 }
 
 // main().then(() => {}).catch((e) =>{console.log(e)})
