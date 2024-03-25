@@ -1,0 +1,18 @@
+{
+  "name": "bot-slack",
+  "version": "0.0.1",
+  "author": "Pavel Petrov",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "@slack/web-api": "^7.0.2",
+    "dotenv": "^16.4.5",
+    "google-auth-library": "^9.7.0",
+    "google-spreadsheet": "^4.1.1",
+    "node-schedule": "^2.1.1"
+  },
+  "devDependencies": {}
+}
